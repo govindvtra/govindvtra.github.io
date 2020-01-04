@@ -11,6 +11,7 @@ pipeline {
     stage('test') {
       steps {
         echo 'Another message'
+        junit '**/surefire-reports/**/*.xml'
       }
     }
   }
