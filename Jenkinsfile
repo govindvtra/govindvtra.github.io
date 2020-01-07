@@ -1,26 +1,52 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('build') {
       parallel {
-        stage('build') {
+        stage('build java 7') {
+          agent {
+            node {
+              label 'java7'
+            }
+
+          }
           steps {
-            sleep 20
+            sleep 2
             echo 'Success!'
-            archiveArtifacts(artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true)
           }
         }
-        stage('build 2') {
+        stage('build java 8') {
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
           steps {
             echo 'parallel build'
+            echo 'I am ${BUZZ_NAME}'
           }
         }
       }
     }
     stage('test') {
-      steps {
-        echo 'Another message'
-        junit(testResults: '**/surefire-reports/**/*.xml', allowEmptyResults: true)
+      parallel {
+        stage('testing A') {
+          steps {
+            echo 'Another message'
+          }
+        }
+        stage('testing B') {
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
+          steps {
+            echo 'testing parallel'
+          }
+        }
       }
     }
   }
