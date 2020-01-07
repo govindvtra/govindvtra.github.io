@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('build') {
       parallel {
@@ -23,5 +23,8 @@ pipeline {
         junit(testResults: '**/surefire-reports/**/*.xml', allowEmptyResults: true)
       }
     }
+  }
+  environment {
+    BUZZ_NAME = 'govind'
   }
 }
