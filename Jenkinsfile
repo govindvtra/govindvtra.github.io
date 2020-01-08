@@ -4,27 +4,17 @@ pipeline {
     stage('build') {
       parallel {
         stage('build java 7') {
-          agent {
-            node {
-              label 'java7'
-            }
-
-          }
+          agent any
           steps {
             sleep 2
             echo 'Success!'
           }
         }
         stage('build java 8') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
+          agent any
           steps {
             echo 'parallel build'
-            echo 'I am ${BUZZ_NAME}'
+            echo 'I am $BUZZ_NAME'
           }
         }
       }
@@ -37,12 +27,7 @@ pipeline {
           }
         }
         stage('testing B') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
+          agent any
           steps {
             echo 'testing parallel'
           }
