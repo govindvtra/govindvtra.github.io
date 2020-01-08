@@ -6,8 +6,8 @@ pipeline {
         stage('build java 7') {
           agent any
           steps {
-            sleep 2
             echo 'Success!'
+            stash(name: 'Stash build 7', allowEmpty: true, includes: 'target/**')
           }
         }
         stage('build java 8') {
@@ -24,6 +24,7 @@ pipeline {
         stage('testing A') {
           steps {
             echo 'Another message'
+            unstash 'Stash build 7'
           }
         }
         stage('testing B') {
