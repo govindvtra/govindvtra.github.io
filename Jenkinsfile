@@ -35,8 +35,13 @@ pipeline {
         }
       }
     }
+    stage('confirm deploy') {
+      steps {
+        input(message: 'Deploy to stage?', ok: 'Yes!! Lets do it')
+      }
+    }
   }
   environment {
-    BUZZ_NAME = 'govind'
+    BUZZ_NAME = 'govin'
   }
 }
